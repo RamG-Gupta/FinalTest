@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
     def show_details
         user= User.find_by(id: params[:home][:user_id])
-        render json: {:home => user.as_json(only:[:id, :user_role, :first_name, :last_name, :email, :dob, :address, :country, :state, :zip_code, :kids, :created_at]), responsecode: 200, responsemessage:"Successfully"}
+        render json: {:home => user.as_json(only:[:id, :user_role, :first_name, :last_name, :email, :dob, :address, :country, :state, :zip_code, :kids, :created_at, :image]), responsecode: 200, responsemessage:"Successfully"}
 
     end
 
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
 
     def home_params
 
-        params.require(:home).permit(:user_id,:user_role)
+        params.require(:home).permit(:id,:user_role)
 
     end
 

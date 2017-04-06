@@ -20,7 +20,7 @@ def create
     end
 end
 def show
-	location = Location.where(id: params[:location][:user_id]).first
+	location = Location.where(id: params[:location][:user_id])
     return render json: {staus: 500,message: "user not found"} if location.blank?
 
     #location = Location.find_by(id: params[:location][:user_id])

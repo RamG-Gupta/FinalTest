@@ -6,6 +6,17 @@ git_source(:github) do |repo_name|
 end
 gem 'geocoder'
 
+gem 'activeadmin', github: 'gregbell/active_admin'
+gem 'devise'
+
+gem 'jquery-validation-rails'
+
+gem 'jquery-turbolinks'
+
+gem 'country_select'
+
+gem 'active_skin'
+
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
