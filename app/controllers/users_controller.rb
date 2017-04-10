@@ -9,6 +9,8 @@ class UsersController < ApplicationController
     end
 
     def show_details
+
+
         user= User.find_by(id: params[:home][:user_id])
         render json: {:home => user.as_json(only:[:id, :user_role, :first_name, :last_name, :email, :dob, :address, :country, :state, :zip_code, :kids, :created_at, :image]), responsecode: 200, responsemessage:"Successfully"}
 
@@ -26,7 +28,7 @@ class UsersController < ApplicationController
         	#differ.as_json(only:[:id, :first_name, :user_role])
         end
 
-        if user.user_role == 'queen;'
+        if user.user_role == 'queen'
           differ = User.where(user_role: 'girl')
         end
 
@@ -53,14 +55,14 @@ class UsersController < ApplicationController
 
     def update_details
 
-    	user = User.find_by(id: params[:home][:user_id])
+    	user = User.where(id: params[:home][:user_id])
     	if user.blank?
-			return render json: {response: 400,  msg: "user not found"}
+			return render json: {response: 401,  msg: "user not found"}
 		end
 		if user.update(update_params)
-			render json: {response: 200,msg: "updated Successfully"}
+			render json: {response: 200, msg: "updated Successfully"}
 		else
-			render json: {response: 400,msg: " Not updated"}
+			render json: {response: 400, msg: " Not updated"}
 		end
 
     end
@@ -77,7 +79,7 @@ class UsersController < ApplicationController
 
     def home_params
 
-        params.require(:home).permit(:id,:user_role)
+       params.require(:home).permit(:user_id,:user_role)
 
     end
 
