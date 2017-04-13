@@ -5,7 +5,8 @@ class UsersController < ApplicationController
     end
     def new
     
-     @user = User.new
+        @user = User.new
+
     end
 
     def show_details
@@ -46,7 +47,7 @@ class UsersController < ApplicationController
 	    user = User.new(user_params)
 	    if user.save
 		   # session[:user_id] = user.id
-        
+           #redirect_to users_url
 		   render json: {:user_id => user[:id], :user_role => user[:user_role], responsecode: 200, responsemessage: "Successfull Sign in"}
 	    else
 		   render json: { responsecode: 400, responsemessage: "Bad Request"}
@@ -57,12 +58,12 @@ class UsersController < ApplicationController
 
     	user = User.where(id: params[:home][:user_id])
     	if user.blank?
-			return render json: {response: 401,  msg: "user not found"}
+			return render json: {responsecode: 401,  responsemessage: "user not found"}
 		end
 		if user.update(update_params)
-			render json: {response: 200, msg: "updated Successfully"}
+			render json: {responsecode: 200, responsemessage: "Updated Successfully"}
 		else
-			render json: {response: 400, msg: " Not updated"}
+			render json: {responsecode: 400, responsemessage: " Not updated"}
 		end
 
     end
@@ -84,3 +85,23 @@ class UsersController < ApplicationController
     end
 
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,14 +1,14 @@
 class User < ApplicationRecord
 	has_secure_password
-	validates_uniqueness_of :email
+	#validates_uniqueness_of :email
     #validates_presence_of :email
 	#validates_format_of :email, with: /@/
     #validates_format_of :first_name, with: /^[-a-z]+$/
     #validates_format_of :last_name, with: /^[-a-z]+$/
-   
+    
 
-    validates_length_of   :email, :minimum => 4, :maximum => 30, :message => "Email should contains maximum 30 Character"
-    validates_format_of  :email, :with => /\A[\+A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i 
+   # validates_length_of   :email, :minimum => 4, :maximum => 30, :message => "Email should contains maximum 30 Character"
+    #validates_format_of  :email, :with => /\A[\+A-Z0-9\._%-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}\z/i 
 
 
 
@@ -32,6 +32,24 @@ class User < ApplicationRecord
     
      
   
-    mount_uploader :image, ImageUploader
+    mount_base64_uploader :image, ImageUploader
+
+
+
+    def send_password_reset
+        generate_token(:password_reset_token)
+        self.password_reset_sent_at = Time.zone.now
+
+        save!
+        UserMailer.password_reset(self).deliver
+    end
+
+    #auth token for forget password
+
+    def generate_token(column)
+    begin
+         self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+    end
 	
 end

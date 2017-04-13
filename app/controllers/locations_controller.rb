@@ -14,7 +14,7 @@ def create
     location = user.locations.new(location_params)
 
 	if location.save
-		render json: {:user_id => user[:id], :location_id => location[:id], responsecode: 200, responsemessage: "Successfully submited"}
+		render json: {location: location.as_json(only:[:user_id, :latitude, :longitude]), responsecode: 200, responsemessage: "Successfully submited"}
     else
     	render json: { responsecode: 400, responsemessage: "Bad Request"}
     end
